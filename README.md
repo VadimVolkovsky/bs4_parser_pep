@@ -80,13 +80,14 @@ python main.py <parser_mode> -h
 python main.py <parser_mode> --help
 ```
 
-+ ** Очистить кеш: **
++ **Очистить кеш:**
 ```
 python main.py <parser_mode> -c
 python main.py <parser_mode> --clear-cache
 ```
 
-+ ** Настроить режим отображения результатов: **
++ **Настроить режим отображения результатов:**
+
 Сохранение результатов в CSV файл:
 ```
 python main.py <parser_mode> --output file
@@ -97,6 +98,7 @@ python main.py <parser_mode> --output pretty
 ```
 
 Если не указывать аргумент --output, результат парсинга будет выведен в консоль:
+  
 (кроме парсера download)
 ```
 python main.py <parser_mode>
