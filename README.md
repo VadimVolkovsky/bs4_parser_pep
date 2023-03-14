@@ -44,24 +44,28 @@ python main.py <parser_mode> <args>
 При запуске парсера необходимо выбрать один из режимов <parser_mode>:
 
 **whats-new**
+
 Парсинг последних обновлений с сайта
 ```
 python main.py whats-new <args>
 ```
 
 **latest-versions**
+
 Парсинг последних версий документации
 ```
 python main.py latest_versions <args>
 ```
 
 **download**
+
 Загрузка и сохранение архива с документацией
 ```
 python main.py download <args>
 ```
 
 **pep**
+
 Парсинг статусов PEP
 ```
 python main.py pep <args>
