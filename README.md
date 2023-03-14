@@ -43,28 +43,28 @@ python main.py <parser_mode> <args>
 ### Режимы парсера:
 При запуске парсера необходимо выбрать один из режимов <parser_mode>:
 
-**whats-new**
++ **whats-new**
 
 Парсинг последних обновлений с сайта
 ```
 python main.py whats-new <args>
 ```
 
-**latest-versions**
++ **latest-versions**
 
 Парсинг последних версий документации
 ```
 python main.py latest_versions <args>
 ```
 
-**download**
++ **download**
 
 Загрузка и сохранение архива с документацией
 ```
 python main.py download <args>
 ```
 
-**pep**
++ **pep**
 
 Парсинг статусов PEP
 ```
@@ -74,19 +74,19 @@ python main.py pep <args>
 ### Аргументы парсера:
 **При запуске парсера можно указать дополнительные аргументы <args>:**
 
-Вывести информацию о парсере:
++ **Вывести информацию о парсере:**
 ```
 python main.py <parser_mode> -h
 python main.py <parser_mode> --help
 ```
 
-Очистить кеш:
++ ** Очистить кеш: **
 ```
 python main.py <parser_mode> -c
 python main.py <parser_mode> --clear-cache
 ```
 
-Настроить режим отображения результатов:
++ ** Настроить режим отображения результатов: **
 Сохранение результатов в CSV файл:
 ```
 python main.py <parser_mode> --output file
