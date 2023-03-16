@@ -28,15 +28,9 @@ def pep(session):
     total_pep = 0
     logs = []
     soup = get_soup(session, peps_main_page)
-    index_by_category = find_tag(
-        soup, 'section', attrs={'id': 'numerical-index'}
-    )
-    table_class = find_tag(
-        index_by_category,
-        'table', attrs={'class': 'pep-zero-table docutils align-default'}
-    )
-    tbody = find_tag(table_class, 'tbody')
-    trclass = tbody.find_all('tr')
+    trclass = soup.select('#numerical-index table.pep-zero-table tbody tr')
+    if not trclass:
+        raise ParserFindTagException(NOT_FOUND)
     for tr_tag in tqdm(trclass):
         status = find_tag(tr_tag, 'abbr')
         href = find_tag(tr_tag, 'a')['href']
@@ -69,11 +63,11 @@ def whats_new(session):
     """Собирает информацию о новых статьях"""
     result = [('Ссылка на статью', 'Заголовок', 'Редактор, Автор')]
     soup = get_soup(session, WHATS_NEW_URL)
-    main_div = find_tag(soup, 'section', attrs={'id': 'what-s-new-in-python'})
-    div_with_ul = find_tag(main_div, 'div', attrs={'class': 'toctree-wrapper'})
-    sections_by_python = div_with_ul.find_all(
-        'li', attrs={'class': 'toctree-l1'}
+    sections_by_python = soup.select(
+        '#what-s-new-in-python div.toctree-wrapper li.toctree-l1'
     )
+    if not sections_by_python:
+        raise ParserFindTagException(NOT_FOUND)
     for section in tqdm(sections_by_python):
         version_a_tag = find_tag(section, 'a')
         href = version_a_tag["href"]
@@ -90,8 +84,7 @@ def latest_versions(session):
     """Собирает информацию о последних версиях документации"""
     REG_EX = r'Python (?P<version>\d\.\d+) \((?P<status>.*)\)'
     soup = get_soup(session, MAIN_DOC_URL)
-    sidebar = find_tag(soup, 'div', {'class': 'sphinxsidebarwrapper'})
-    ul_tags = sidebar.find_all('ul')
+    ul_tags = soup.select('div.sphinxsidebarwrapper ul')
     for ul in ul_tags:
         if 'All versions' in ul.text:
             a_tags = ul.find_all('a')
@@ -100,8 +93,9 @@ def latest_versions(session):
         raise ParserFindTagException(NOT_FOUND)
 
     results = [('Ссылка на документацию', 'Версия', 'Статус')]
+    pattern = REG_EX
     for a_tag in a_tags:
-        data = re.search(a_tag.text, pattern=REG_EX)
+        data = re.search(pattern, a_tag.text)
         if data is not None:
             link = a_tag['href']
             version, status = data.groups()
@@ -115,11 +109,10 @@ def latest_versions(session):
 
 def download(session):
     """Скачивает архив с документацией"""
-    REG_EX = r'.+pdf-a4\.zip$'
     soup = get_soup(session, DOWNLOAD_DOC_URL)
-    table_tag = find_tag(soup, 'table', {'class': 'docutils'})
-    pdf_a4_tag = find_tag(table_tag, 'a', {'href': re.compile(REG_EX)})
-    pdf_a4_link = pdf_a4_tag['href']
+    pdf_a4_link = soup.select_one(
+        'table.docutils a[href$="pdf-a4.zip"]'
+    )['href']
     archive_url = urljoin(DOWNLOAD_DOC_URL, pdf_a4_link)
     filename = archive_url.split('/')[-1]
     DOWNLOADS_DIR = BASE_DIR / 'downloads'
