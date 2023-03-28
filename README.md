@@ -104,7 +104,10 @@ python main.py <parser_mode> --output pretty
 python main.py <parser_mode>
 ```
 
+**Технологии:**
+- Python 3.9
+- BeautifulSoup4
 
 ### Автор проекта:
 
-**Vadim Volkovsky**
+Vadim Volkovsky
