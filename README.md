@@ -5,9 +5,9 @@
 
 Список поддерживаемых сайтов:
 
-https://docs.python.org/3/
+- https://docs.python.org/3/
 
-https://peps.python.org/
+- https://peps.python.org/
 
 ### Инструкция по запуску:
 **Клонируйте репозиторий:**
